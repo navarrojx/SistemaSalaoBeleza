@@ -11,23 +11,23 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      # Variáveis de ambiente (opcional, útil pro EF ou Supabase se precisar rodar testes com DB)
+
       ASPNETCORE_ENVIRONMENT: CI
 
     steps:
-    - name: 📦 Checkout do código
+    - name:  Checkout do código
       uses: actions/checkout@v4
 
-    - name: ⚙️ Instalar .NET 9 SDK
+    - name:  Instalar .NET 9 SDK
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
 
-    - name: 📚 Restaurar dependências
+    - name: Restaurar dependências
       run: dotnet restore
 
-    - name: 🧱 Compilar solução
+    - name: Compilar solução
       run: dotnet build --configuration Release --no-restore
 
-    - name: 🧪 Executar testes
+    - name: Executar testes
       run: dotnet test --configuration Release --no-build --verbosity normal
