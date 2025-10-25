@@ -37,6 +37,7 @@
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
     <!-- JSON -->
     <PackageReference Include="System.Text.Json" Version="9.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <!-- Testes -->
     <PackageReference Include="MSTest.TestFramework" Version="4.0.1" />
     <PackageReference Include="NUnit" Version="4.4.0" />
