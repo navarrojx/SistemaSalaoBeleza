@@ -35,7 +35,7 @@ jobs:
       - name: Publicar build
         run: dotnet publish AngelaAraujo.csproj -c Release -o ./publish
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: app-build
           path: ./publish
@@ -46,7 +46,7 @@ jobs:
 
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: app-build
           path: ./ci-artifacts
