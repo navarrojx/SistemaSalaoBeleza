@@ -1,4 +1,4 @@
-name: .NET 9 CI
+name: .NET 8 CI
 
 on:
   push:
@@ -11,20 +11,22 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-
       ASPNETCORE_ENVIRONMENT: CI
 
     steps:
-    - name:  Checkout do código
+    - name: Checkout do código
       uses: actions/checkout@v4
 
-    - name:  Instalar .NET 9 SDK
+    - name: Instalar .NET 8 SDK
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 9.0.x
+        dotnet-version: 8.0.x
+
+    - name: Limpar cache de pacotes
+      run: dotnet nuget locals all --clear
 
     - name: Restaurar dependências
-      run: dotnet build AngelaAraujo.csproj
+      run: dotnet restore AngelaAraujo.csproj
 
     - name: Compilar solução
       run: dotnet build AngelaAraujo.csproj --configuration Release --no-restore
