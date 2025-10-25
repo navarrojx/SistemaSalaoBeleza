@@ -29,4 +29,4 @@ jobs:
       run: dotnet build AngelaAraujo.csproj --configuration Release
 
     - name: Executar testes
-      run: dotnet test AngelaAraujo.csproj --configuration Release --verbosity normal
+      run: dotnet test AngelaAraujo.Tests/AngelaAraujo.Tests.csproj --configuration Release --verbosity normal
