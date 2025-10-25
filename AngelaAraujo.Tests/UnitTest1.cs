@@ -1,4 +1,6 @@
-﻿namespace AngelaAraujo.Tests;
+﻿using xunit;
+
+namespace AngelaAraujo.Tests;
 
 public class UnitTest1
 {
