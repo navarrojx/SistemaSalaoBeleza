@@ -12,14 +12,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout do código
-      uses: actions/checkout@v4
+      - name: Checkout do código
+        uses: actions/checkout@v4
 
-    - name: Gerar build para entrega
-      run: dotnet publish -c Release -o ./publish
+      - name: Baixar artefatos do workflow CI
+        uses: mikemackintosh/download-artifact-from-workflow@v1
+        with:
+          workflow: ".NET 8 CI"
+          artifact-name: "app-build"
+          run-id: ${{ github.event.workflow_run.id }}
+          download-path: ./ci-artifacts
 
-    - name: Salvar artefatos
-      uses: actions/upload-artifact@v4
-      with:
-        name: app-build
-        path: ./publish
+      - name: Listar artefatos baixados
+        run: ls -la ./ci-artifacts
+
+      - name: Deploy / Entrega contínua
+        run: |
+          echo "Iniciando deploy com os arquivos do build..."
+          # Exemplo de deploy local (ajuste conforme necessário):
+          # cp -r ./ci-artifacts/* /caminho/do/deploy/
+          echo "Deploy concluído!"

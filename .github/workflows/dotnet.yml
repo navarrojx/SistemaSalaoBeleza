@@ -14,19 +14,28 @@ jobs:
       ASPNETCORE_ENVIRONMENT: CI
 
     steps:
-    - name: Checkout do código
-      uses: actions/checkout@v4
+      - name: Checkout do código
+        uses: actions/checkout@v4
 
-    - name: Instalar .NET 8 SDK
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
+      - name: Instalar .NET 8 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
 
-    - name: Restaurar dependências
-      run: dotnet restore AngelaAraujo.csproj
+      - name: Restaurar dependências
+        run: dotnet restore AngelaAraujo.csproj
 
-    - name: Compilar solução
-      run: dotnet build AngelaAraujo.csproj --configuration Release
+      - name: Compilar solução
+        run: dotnet build AngelaAraujo.csproj --configuration Release
 
-    - name: Executar testes
-      run: dotnet test AngelaAraujo.Tests/AngelaAraujo.Tests.csproj --configuration Release --verbosity normal
+      - name: Executar testes
+        run: dotnet test AngelaAraujo.Tests/AngelaAraujo.Tests.csproj --configuration Release --verbosity normal
+
+      - name: Publicar build
+        run: dotnet publish AngelaAraujo.csproj -c Release -o ./publish
+
+      - name: Upload do artefato
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-build
+          path: ./publish
