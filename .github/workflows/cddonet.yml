@@ -1,0 +1,25 @@
+name: .NET 9 CD (Entrega Contínua)
+
+on:
+  workflow_run:
+    workflows: [".NET 9 CI"]
+    types:
+      - completed
+
+jobs:
+  deliver:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout do código
+      uses: actions/checkout@v4
+
+    - name: Gerar build para entrega
+      run: dotnet publish -c Release -o ./publish
+
+    - name: Salvar artefatos
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-build
+        path: ./publish
