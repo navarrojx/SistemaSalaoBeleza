@@ -32,8 +32,14 @@ jobs:
       - name: Executar testes
         run: dotnet test AngelaAraujo.Tests/AngelaAraujo.Tests.csproj --configuration Release --verbosity normal
 
+      - name: Limpar build antigo
+        run: |
+          dotnet clean
+          rm -rf bin obj
+
       - name: Publicar build
         run: dotnet publish AngelaAraujo.csproj -c Release -o ./publish
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
