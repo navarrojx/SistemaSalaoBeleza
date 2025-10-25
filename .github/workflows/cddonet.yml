@@ -2,7 +2,7 @@ name: .NET 9 CD (Entrega Contínua)
 
 on:
   workflow_run:
-    workflows: [".NET 9 CI"]
+    workflows: [".NET 8 CI"]
     types:
       - completed
 
