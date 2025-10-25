@@ -21,7 +21,11 @@ jobs:
           workflow: ".NET 8 CI"
           artifact-name: "app-build"
           run-id: ${{ github.event.workflow_run.id }}
+<<<<<<< HEAD
           download-path: ./ci-artifacts
+=======
+          download-path: ./ci-artifacts   # Onde os artefatos serão salvos
+>>>>>>> 40ec1534b6bf2dd432c2319754fc98f5b2646fa3
 
       - name: Listar artefatos baixados
         run: ls -la ./ci-artifacts
@@ -29,6 +33,11 @@ jobs:
       - name: Deploy / Entrega contínua
         run: |
           echo "Iniciando deploy com os arquivos do build..."
+<<<<<<< HEAD
           # Exemplo de deploy local (ajuste conforme necessário):
           # cp -r ./ci-artifacts/* /caminho/do/deploy/
+=======
+          # Exemplo de deploy:
+          # cp -r ./ci-artifacts/app-build/* /caminho/do/deploy/
+>>>>>>> 40ec1534b6bf2dd432c2319754fc98f5b2646fa3
           echo "Deploy concluído!"
