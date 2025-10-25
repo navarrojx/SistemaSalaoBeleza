@@ -22,14 +22,11 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
-    - name: Limpar cache de pacotes
-      run: dotnet nuget locals all --clear
-
     - name: Restaurar dependências
       run: dotnet restore AngelaAraujo.csproj
 
     - name: Compilar solução
-      run: dotnet build AngelaAraujo.csproj --configuration Release --no-restore
+      run: dotnet build AngelaAraujo.csproj --configuration Release
 
     - name: Executar testes
-      run: dotnet test AngelaAraujo.csproj --configuration Release --no-build --verbosity normal
+      run: dotnet test AngelaAraujo.csproj --configuration Release --verbosity normal
