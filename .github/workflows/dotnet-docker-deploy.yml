@@ -1,0 +1,53 @@
+name: Docker Deploy
+on:
+  workflow_run:
+    workflows: 
+      - ".NET 8 CI"
+      - ".NET 9 CD (Entrega Contínua)"
+    types:
+      - completed
+
+
+jobs:
+  docker-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Baixar artefato do build
+        uses: actions/download-artifact@v3
+        with:
+          name: app-build       
+          path: out/
+
+      - name: Setup Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login Docker
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        run: docker build -t julionavarroj/SistemaSalaoBeleza:latest .
+
+      - name: Push Docker image
+        run: docker push julionavarroj/SistemaSalaoBeleza:latest 
+
+      - name: Deploy remoto via SSH
+        uses: appleboy/ssh-action@v0.1.9
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            docker pull julionavarroj/SistemaSalaoBeleza:latest 
+            docker stop SistemaSalaoBeleza || true
+            docker rm SistemaSalaoBeleza || true
+            docker run -d --name SistemaSalaoBeleza -p 5000:5000 -p 5001:5001 \
+              -e SUPABASE_URL=${{ secrets.SUPABASE_URL }} \
+              -e SUPABASE_KEY=${{ secrets.SUPABASE_KEY }} \
+              julionavarroj/SistemaSalaoBeleza:latest 
+
